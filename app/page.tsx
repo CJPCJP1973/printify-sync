@@ -9,7 +9,10 @@ export default function Page() {
           <span className="brand-mark" aria-hidden="true">DH</span>
           <span>Dog Hunters<br />Apparel</span>
         </a>
-        <span className="status"><span className="status-dot" /> Pop-up store live</span>
+        <div className="header-actions">
+          <span className="status"><span className="status-dot" /> Pop-up store live</span>
+          <a className="admin-button" href="/admin">Admin panel</a>
+        </div>
       </header>
 
       <section className="hero" aria-labelledby="hero-title">
