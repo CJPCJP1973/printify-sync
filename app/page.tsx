@@ -14,7 +14,7 @@ export default function Page() {
 
       <section className="hero" aria-labelledby="hero-title">
         <p className="eyebrow">Built for the hunt</p>
-        <h1 id="hero-title">Gear for the<br /><em>dog hunters.</em></h1>
+        <h1 id="hero-title">Gear for the<br /><em>dog hunters</em></h1>
         <p className="intro">Field-tested spirit, made for the people who know that every great adventure starts with four paws.</p>
         <a className="shop-button" href={storeUrl} target="_blank" rel="noreferrer">
           Shop the collection <span aria-hidden="true">↗</span>
