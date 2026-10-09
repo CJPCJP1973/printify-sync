@@ -169,8 +169,11 @@
 .site-header, .site-footer { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; }
 .brand { display: flex; align-items: center; gap: 12px; color: inherit; text-decoration: none; font-size: 11px; line-height: 1.05; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; }
 .brand-mark { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid rgba(241,235,223,.5); border-radius: 50%; font-size: 10px; letter-spacing: -.05em; }
-.status { color: rgba(241,235,223,.65); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
-.status-dot { display: inline-block; width: 6px; height: 6px; margin-right: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 4px rgba(214,107,61,.16); }
+  .header-actions { display: flex; align-items: center; gap: 20px; }
+  .status { color: rgba(241,235,223,.65); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+  .status-dot { display: inline-block; width: 6px; height: 6px; margin-right: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 4px rgba(214,107,61,.16); }
+  .admin-button { padding: 9px 12px; border: 1px solid rgba(241,235,223,.4); color: var(--cream); text-decoration: none; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: border-color .2s ease, color .2s ease; }
+  .admin-button:hover { border-color: var(--orange); color: var(--orange); }
 .hero { position: relative; z-index: 1; max-width: 720px; margin: auto 0; padding: 9vh 0; }
 .eyebrow { color: var(--orange); font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
 h1 { margin: 20px 0 22px; font-size: clamp(58px, 10vw, 140px); line-height: .88; letter-spacing: -.07em; font-weight: 500; }
@@ -230,4 +233,4 @@ h1 em { color: var(--orange); font-family: Georgia, serif; font-weight: 400; let
 .admin-denied h1 { margin: 16px 0; font-size: clamp(46px, 8vw, 92px); }
 .admin-denied p:not(.admin-kicker) { max-width: 390px; color: rgba(241,235,223,.65); line-height: 1.6; }
 @media (max-width: 640px) { .admin-grid { grid-template-columns: 1fr; } .admin-footer { align-items: flex-start; flex-direction: column; } }
-@media (max-width: 520px) { .status { display: none; } .site-footer { gap: 16px; flex-direction: column; align-items: flex-start; } }
+  @media (max-width: 520px) { .status { display: none; } .header-actions { gap: 0; } .site-footer { gap: 16px; flex-direction: column; align-items: flex-start; } }
