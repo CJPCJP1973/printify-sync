@@ -29,6 +29,11 @@ export default async function AdminPage() {
       </section>
 
       <section className="admin-grid" aria-label="Admin controls">
+        <Link className="admin-card admin-card-action" href="/admin/design">
+          <span className="admin-card-label">Product studio</span>
+          <strong>Design</strong>
+          <span>Create a Printify product mockup →</span>
+        </Link>
         <article className="admin-card admin-card-live">
           <span className="admin-card-label">Store status</span>
           <strong>Live</strong>
