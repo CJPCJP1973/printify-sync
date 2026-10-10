@@ -1,8 +1,13 @@
 import Link from 'next/link'
-import { getAdminOnly } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+import { getAdminOnly, requireUser } from '@/lib/supabase/server'
 
 export default async function AdminPage() {
   const user = await getAdminOnly()
+
+  if (!user && !(await requireUser())) {
+    redirect('/admin/login')
+  }
 
   if (!user) {
     return (
