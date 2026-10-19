@@ -1,8 +1,13 @@
 import { CheckoutButton } from '@/components/checkout-button'
+import { ShopifyProducts } from '@/components/shopify-products'
+import { getProducts } from '@/lib/shopify'
 
-const storeUrl = 'https://dog-hunters-apparel.printify.me'
+const storeUrl = process.env.SHOPIFY_STORE_DOMAIN
+  ? `https://${process.env.SHOPIFY_STORE_DOMAIN}`
+  : 'https://dog-hunters-apparel.printify.me'
 
-export default function Page() {
+export default async function Page() {
+  const products = await getProducts()
   return (
     <main className="store-shell">
       <div className="grain" aria-hidden="true" />
@@ -28,6 +33,8 @@ export default function Page() {
           </a>
         </div>
       </section>
+
+      <ShopifyProducts products={products} />
 
       <footer className="site-footer">
         <span>Dog Hunters Apparel</span>
