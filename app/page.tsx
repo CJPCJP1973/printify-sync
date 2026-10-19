@@ -1,3 +1,5 @@
+import { CheckoutButton } from '@/components/checkout-button'
+
 const storeUrl = 'https://dog-hunters-apparel.printify.me'
 
 export default function Page() {
@@ -19,9 +21,12 @@ export default function Page() {
         <p className="eyebrow">Built for the hunt</p>
         <h1 id="hero-title">Gear for the<br /><em>dog hunters</em></h1>
         <p className="intro">Field-tested spirit, made for the people who know that every great adventure starts with four paws.</p>
-        <a className="shop-button" href={storeUrl} target="_blank" rel="noreferrer">
-          Shop the collection <span aria-hidden="true">↗</span>
-        </a>
+        <div className="hero-actions">
+          <CheckoutButton productId="field-tee" />
+          <a className="collection-link" href={storeUrl} target="_blank" rel="noreferrer">
+            Browse the Printify collection <span aria-hidden="true">↗</span>
+          </a>
+        </div>
       </section>
 
       <footer className="site-footer">
