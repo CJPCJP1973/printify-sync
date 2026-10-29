@@ -4,11 +4,11 @@ import { PRODUCTS } from '@/lib/products'
 import { getStripe } from '@/lib/stripe'
 
 function getCanonicalSiteOrigin() {
-  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL
-  if (!configuredUrl) {
-    if (process.env.NODE_ENV === 'development') return 'http://localhost:3000'
-    throw new Error('NEXT_PUBLIC_SITE_URL must be configured for checkout')
-  }
+  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL ?? (
+    process.env.NODE_ENV === 'production'
+      ? 'https://printify-sync.vercel.app'
+      : 'http://localhost:3000'
+  )
 
   let url: URL
   try {
