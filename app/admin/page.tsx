@@ -1,10 +1,20 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { getAdminOnly } from '@/lib/supabase/server'
+import { isAdminEmail, requireUser } from '@/lib/supabase/server'
 
 export default async function AdminPage() {
-  const user = await getAdminOnly()
+  const user = await requireUser()
   if (!user) redirect('/admin/login')
+  if (!isAdminEmail(user.email)) {
+    return (
+      <main className="admin-shell admin-denied">
+        <p className="admin-kicker">Dog Hunters Apparel</p>
+        <h1>Admin access required.</h1>
+        <p>This account is signed in but is not authorized to access the administrator area.</p>
+        <Link className="admin-link" href="/">Return to the storefront</Link>
+      </main>
+    )
+  }
 
   return (
     <main className="admin-shell">
