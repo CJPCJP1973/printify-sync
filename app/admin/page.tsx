@@ -1,20 +1,16 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { getAdminOnly, requireUser } from '@/lib/supabase/server'
+import { isAdminEmail, requireUser } from '@/lib/supabase/server'
 
 export default async function AdminPage() {
-  const user = await getAdminOnly()
-
-  if (!user && !(await requireUser())) {
-    redirect('/admin/login')
-  }
-
-  if (!user) {
+  const user = await requireUser()
+  if (!user) redirect('/admin/login')
+  if (!isAdminEmail(user.email)) {
     return (
       <main className="admin-shell admin-denied">
         <p className="admin-kicker">Dog Hunters Apparel</p>
         <h1>Admin access required.</h1>
-        <p>Sign in with the approved administrator account to enter God Mode.</p>
+        <p>This account is signed in but is not authorized to access the administrator area.</p>
         <Link className="admin-link" href="/">Return to the storefront</Link>
       </main>
     )
@@ -37,28 +33,28 @@ export default async function AdminPage() {
         <Link className="admin-card admin-card-action" href="/admin/design">
           <span className="admin-card-label">Product studio</span>
           <strong>Design</strong>
-          <span>Create a Printify product mockup →</span>
+          <span>Create a product concept preview (not yet published to Printify) →</span>
         </Link>
-        <article className="admin-card admin-card-live">
-          <span className="admin-card-label">Store status</span>
-          <strong>Live</strong>
-          <span>Printify pop-up connected</span>
+        <article className="admin-card">
+          <span className="admin-card-label">Store integration</span>
+          <strong>Needs verification</strong>
+          <span>Confirm Printify credentials and fulfillment workflow before describing the store as connected.</span>
         </article>
         <article className="admin-card">
           <span className="admin-card-label">Access level</span>
           <strong>Owner</strong>
-          <span>Full administrative access</span>
+          <span>Administrator access is checked on the server.</span>
         </article>
         <article className="admin-card">
           <span className="admin-card-label">Next control</span>
           <strong>Orders</strong>
-          <span>Connect order management when ready</span>
+          <span>Order persistence and fulfillment automation are not implemented yet.</span>
         </article>
       </section>
 
       <footer className="admin-footer">
         <Link className="admin-link" href="/">View storefront</Link>
-        <span>Authenticated session required</span>
+        <span>Authenticated administrator session required</span>
       </footer>
     </main>
   )
