@@ -1,0 +1,2 @@
+import { SiteHeader, SiteFooter } from '@/components/store-shell'
+export function PolicyPage({ title, children }: { title: string; children: React.ReactNode }) { return <div className="store-shell"><div className="grain" aria-hidden="true" /><SiteHeader /><main className="policy-page"><p className="eyebrow">Dog Hunters Apparel</p><h1>{title}</h1><div className="policy-copy">{children}</div></main><SiteFooter /></div> }

@@ -1,39 +1,8 @@
-import { CheckoutButton } from '@/components/checkout-button'
+import Image from 'next/image'
+import { cookies } from 'next/headers'
+import { getCart, getCollections, getProducts, type ShopifyCollection, type ShopifyProduct } from '@/lib/shopify'
+import { ProductCard } from '@/components/catalog'
+import { StoreShell } from '@/components/store-shell'
 
-const storeUrl = 'https://dog-hunters-apparel.printify.me'
-
-export default function Page() {
-  return (
-    <main className="store-shell">
-      <div className="grain" aria-hidden="true" />
-      <header className="site-header">
-        <a className="brand" href="/" aria-label="Dog Hunters Apparel home">
-          <span className="brand-mark" aria-hidden="true">DH</span>
-          <span>Dog Hunters<br />Apparel</span>
-        </a>
-        <div className="header-actions">
-          <span className="status"><span className="status-dot" /> Pop-up store live</span>
-          <a className="admin-button" href="/admin">Admin panel</a>
-        </div>
-      </header>
-
-      <section className="hero" aria-labelledby="hero-title">
-        <p className="eyebrow">Built for the hunt</p>
-        <h1 id="hero-title">Gear for the<br /><em>dog hunters</em></h1>
-        <p className="intro">Field-tested spirit, made for the people who know that every great adventure starts with four paws.</p>
-        <div className="hero-actions">
-          <CheckoutButton productId="field-tee" />
-          <a className="collection-link" href={storeUrl} target="_blank" rel="noreferrer">
-            Browse the Printify collection <span aria-hidden="true">↗</span>
-          </a>
-        </div>
-      </section>
-
-      <footer className="site-footer">
-        <span>Dog Hunters Apparel</span>
-        <span>Est. for the field · 2026</span>
-      </footer>
-    </main>
-  )
-}
-
+export const revalidate = 60
+export default async function Page() { let products: ShopifyProduct[] = []; let collections: ShopifyCollection[] = []; try { [products, collections] = await Promise.all([getProducts(4), getCollections(4)]) } catch { products = []; collections = [] } const cartId = (await cookies()).get('dog-hunters-cart')?.value; const cart = cartId ? await getCart(cartId).catch(() => null) : null; return <StoreShell initialCart={cart}><main><section className="hero" aria-labelledby="hero-title"><p className="eyebrow">Built for the hunt</p><h1 id="hero-title">Gear for the<br /><em>dog hunters</em></h1><p className="intro">Field-tested spirit, made for the people who know that every great adventure starts with four paws.</p><div className="hero-actions"><a className="shop-button" href="/shop">Shop the collection <span>↗</span></a><a className="collection-link" href="#featured">See what&apos;s new ↓</a></div></section><section className="home-section" id="featured"><div className="section-heading"><div><p className="eyebrow">Fresh from the field</p><h2>Featured products</h2></div><a href="/shop">View all <span>↗</span></a></div>{products.length ? <div className="product-grid">{products.map((product) => <ProductCard key={product.id} product={product} />)}</div> : <p className="muted-copy">New gear is on the way. Check back soon.</p>}</section><section className="home-section" id="collections"><div className="section-heading"><div><p className="eyebrow">Find your kit</p><h2>Shop by collection</h2></div></div><div className="collection-grid">{collections.map((collection) => <a className="collection-card" href={`/shop?collection=${collection.handle}`} key={collection.id}>{collection.image && <Image src={collection.image.url} alt="" fill sizes="(max-width: 700px) 100vw, 25vw" />}<span>{collection.title} <b>↗</b></span></a>)}</div></section><section className="home-note" id="about"><p className="eyebrow">Made for the people behind the dogs</p><p>Rugged essentials for the early risers, trail takers, and good dogs who make the miles worth it.</p></section></main></StoreShell> }
